@@ -1,7 +1,6 @@
 import React from "react";
 import Carousel from "../components/Carousel";
 import Banner from '../components/Banner'
-import { Link } from "react-router-dom";
 import image1 from '../assets/images/Coffee 1.jpg'
 import image2 from '../assets/images/Coffee 2.webp'
 import image3 from '../assets/images/Coffee 3.jpg'

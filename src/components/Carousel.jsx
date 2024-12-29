@@ -108,9 +108,6 @@ const Carousel = () => {
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                 >
-                  {/* <button className="w-auto p-2 text-lg font-semibold tracking-wider text-white bg-black border border-black rounded-full lg:px-4">
-                    Find Out More
-                  </button> */}
                 </div>
               </div>
             </SwiperSlide>

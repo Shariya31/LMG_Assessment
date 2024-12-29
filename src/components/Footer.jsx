@@ -8,7 +8,6 @@ import {
 } from "react-icons/fa";
 
 import { LiaAngleDownSolid } from "react-icons/lia";
-// import FooterBanner from "../components/Banner/FooterBanner";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -28,10 +27,8 @@ const Footer = () => {
 
   return (
     <>
-      {/* <FooterBanner /> */}
       <footer className="bg-black text-white py-8 w-full">
         <div className="w-[90%] mx-auto flex flex-col md:flex-row md:justify-between">
-          {/* Logo and Company Information */}
           <div className="w-full md:w-[25%] md:pr-8 mb-6 md:mb-0">
             <div className="flex flex-col items-center md:items-start text-center md:text-left">
               <Link to="/">
