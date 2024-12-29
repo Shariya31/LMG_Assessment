@@ -1,0 +1,80 @@
+/* ImageSlider.css */
+
+.container0 {
+    width: 100%;
+    margin: auto;
+    padding: 40px 20px;
+    text-align: center;
+    background: #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  .heading {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-family: "Arial", sans-serif;
+  }
+  
+  .swiper_container {
+    width: 90%;
+    padding-top: 20px;
+    padding-bottom: 50px;
+  }
+  
+  .swiper-slide {
+    width: 100%;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    transition: all 0.5s ease;
+    /* filter: blur(2px); */
+    opacity: 1;
+  }
+  
+  .swiper-slide-active {
+    filter: blur(0px);
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+  }
+  
+  /* Swiper navigation buttons */
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: #333;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    z-index: 10;
+  }
+  
+  .swiper-button-prev:hover,
+  .swiper-button-next:hover {
+    color: #555;
+  }
+  
+  .slider-arrow ion-icon {
+    font-size: 24px;
+  }
+  
+  /* Remove the pagination bullets */
+  .swiper-pagination {
+    display: none;
+  }
+  

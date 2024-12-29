@@ -1,125 +1,126 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { addProduct} from "../features/productSlice";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-function CreateProductPage() {
-  const [formData, setFormData] = useState({
-    title: "",
-    price: "",
-    description: "",
-    category: "",
-  });
-  const [errors, setErrors] = useState({});
-  const dispatch = useDispatch();
+const CreateProduct = () => {
+  const [title, setTitle] = useState('');
+  const [price, setPrice] = useState('');
+  const [description, setDescription] = useState('');
+  const [image, setImage] = useState('');
+  const [category, setCategory] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    if (!formData.title) newErrors.title = "Product title is required.";
-    if (!formData.price) newErrors.price = "Product price is required.";
-    if (!formData.description) newErrors.description = "Product description is required.";
-    if (!formData.category) newErrors.category = "Product category is required.";
-    return newErrors;
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const formErrors = validateForm();
-    setErrors(formErrors);
 
-    if (Object.keys(formErrors).length === 0) {
-      // Dispatch create product action
-      dispatch(addProduct(formData));
+    if (!title || !price || !description || !image || !category) {
+      setError('All fields are required!');
+      return;
+    }
+    
+    setError('');
+    setSuccess('');
 
-      // Redirect after successful creation (optional)
-      navigate("/product");
+    const productData = {
+      title,
+      price: parseFloat(price), 
+      description,
+      image,
+      category
+    };
+    try {
+      const response = await axios.post('https://fakestoreapi.com/products', productData);
+
+     
+      if (response.status === 200) {
+        setSuccess('Product created successfully!');
+        navigate("/product")
+        setTitle('');
+        setPrice('');
+        setDescription('');
+        setImage('');
+        setCategory('');
+      } else {
+        throw new Error('Failed to create product');
+      }
+    } catch (error) {
+      setError('Error creating product: ' + error.message);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded">
-      <h1 className="text-2xl font-bold text-center mb-4">Create Product</h1>
+    <div className="container mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-4">Create New Product</h2>
 
-      <form onSubmit={handleSubmit}>
-        {/* Product Title */}
-        <div className="mb-4">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-            Product Title
-          </label>
+      {error && <div className="text-red-500 mb-4">{error}</div>}
+      {success && <div className="text-green-500 mb-4">{success}</div>}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium">Title</label>
           <input
             type="text"
-            name="title"
-            id="title"
-            value={formData.title}
-            onChange={handleChange}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-300"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
+            placeholder="Enter product title"
           />
-          {errors.title && <p className="text-red-600 text-sm">{errors.title}</p>}
         </div>
 
-        {/* Product Price */}
-        <div className="mb-4">
-          <label htmlFor="price" className="block text-sm font-medium text-gray-700">
-            Product Price
-          </label>
+        <div>
+          <label className="block text-sm font-medium">Price</label>
           <input
             type="number"
-            name="price"
-            id="price"
-            value={formData.price}
-            onChange={handleChange}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-300"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
+            placeholder="Enter product price"
           />
-          {errors.price && <p className="text-red-600 text-sm">{errors.price}</p>}
         </div>
 
-        {/* Product Description */}
-        <div className="mb-4">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-            Product Description
-          </label>
+        <div>
+          <label className="block text-sm font-medium">Description</label>
           <textarea
-            name="description"
-            id="description"
-            value={formData.description}
-            onChange={handleChange}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-300"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
+            placeholder="Enter product description"
           />
-          {errors.description && <p className="text-red-600 text-sm">{errors.description}</p>}
         </div>
 
-        {/* Product Category */}
-        <div className="mb-4">
-          <label htmlFor="category" className="block text-sm font-medium text-gray-700">
-            Product Category
-          </label>
+        <div>
+          <label className="block text-sm font-medium">Image URL</label>
+          <input
+            type="url"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
+            placeholder="Enter image URL"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium">Category</label>
           <input
             type="text"
-            name="category"
-            id="category"
-            value={formData.category}
-            onChange={handleChange}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-300"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
+            placeholder="Enter product category"
           />
-          {errors.category && <p className="text-red-600 text-sm">{errors.category}</p>}
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+          className="mt-4 w-full bg-blue-500 text-white p-2 rounded"
         >
           Create Product
         </button>
       </form>
     </div>
   );
-}
+};
 
-export default CreateProductPage;
+export default CreateProduct;

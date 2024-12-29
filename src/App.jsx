@@ -7,6 +7,8 @@ import SignupPage from "./pages/SignupPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CreateProductPage from "./pages/CreateProductPage"; 
 import Products from "./pages/Products"
+import Footer from "./components/Footer";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/product" element={<Products />} />
+          <Route path="*" element={<PageNotFound />} />
 
 
           {/* Protected Routes */}
@@ -32,6 +35,7 @@ function App() {
           />
         </Routes>
       </div>
+      <Footer/>
     </Router>
   );
 }
